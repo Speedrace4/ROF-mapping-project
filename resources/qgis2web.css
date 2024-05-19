@@ -434,3 +434,21 @@ td img {
     background-color: white;
     margin: 3px 0;
 }
+
+#map2Datasets.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+#dataset_context_container2.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.top_tag {
+    bottom: 120%;
+}
+
+.bottom_tag {
+    bottom: -120%;
+}

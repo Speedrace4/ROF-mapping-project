@@ -1,4 +1,5 @@
 var dataset_text = document.getElementById("dataset_context")
+var dataset_text2 = document.getElementById("dataset_context2")
 
 var slider = document.getElementById('slider');
 
@@ -43,35 +44,70 @@ slider_tags[2].classList.add("top_tag")
 slider_tags[3].classList.add("bottom_tag")
 
 let allCrimes = []
+let allCrimes2 = []
 
 function selectAll(){
     const textBox = document.getElementById("textbox");
     textBox.value = "ARSON, ASSAULT, BATTERY, BURGLARY, CONCEALED CARRY LICENSE VIOLATION, CRIMINAL DAMAGE, CRIMINAL SEXUAL ASSAULT, CRIMINAL TRESPASS, DECEPTIVE PRACTICE, DOMESTIC VIOLENCE, GAMBLING, HOMICIDE, HUMAN TRAFFICKING, INTERFERENCE WITH PUBLIC OFFICER, INTIMIDATION, KIDNAPPING, LIQUOR LAW VIOLATION, MOTOR VEHICLE THEFT, NARCOTICS, NON-CRIMINAL, OBSCENITY, OFFENSE INVOLVING CHILDREN, OTHER NARCOTIC VIOLATION, OTHER OFFENSE, PROSTITUTION, PUBLIC INDECENCY, PUBLIC PEACE VIOLATION, RITUALISM, ROBBERY, SEX OFFENSE, STALKING, THEFT, WEAPONS VIOLATION";
-    find_min_max_crime_vals();
+    find_min_max_crime_vals(1);
+}
+
+function selectAll2(){
+    const textBox = document.getElementById("textbox2");
+    textBox.value = "ARSON, ASSAULT, BATTERY, BURGLARY, CONCEALED CARRY LICENSE VIOLATION, CRIMINAL DAMAGE, CRIMINAL SEXUAL ASSAULT, CRIMINAL TRESPASS, DECEPTIVE PRACTICE, DOMESTIC VIOLENCE, GAMBLING, HOMICIDE, HUMAN TRAFFICKING, INTERFERENCE WITH PUBLIC OFFICER, INTIMIDATION, KIDNAPPING, LIQUOR LAW VIOLATION, MOTOR VEHICLE THEFT, NARCOTICS, NON-CRIMINAL, OBSCENITY, OFFENSE INVOLVING CHILDREN, OTHER NARCOTIC VIOLATION, OTHER OFFENSE, PROSTITUTION, PUBLIC INDECENCY, PUBLIC PEACE VIOLATION, RITUALISM, ROBBERY, SEX OFFENSE, STALKING, THEFT, WEAPONS VIOLATION";
+    find_min_max_crime_vals(2);
 }
 
 function deselectAll(){
     const textBox = document.getElementById("textbox");
     textBox.value = "";
-    find_min_max_crime_vals();
+    find_min_max_crime_vals(1);
 }
 
-function toggleMinimize() {
-    const mapControls = document.getElementById("mapControls");
-    const minimizeButton = document.getElementById("minimizeButton");
+function deselectAll2(){
+    const textBox = document.getElementById("textbox2");
+    textBox.value = "";
+    find_min_max_crime_vals(2);
+}
 
-    if (mapControls.classList.contains("minimized")) {
-        mapControls.classList.remove("minimized");
-        minimizeButton.textContent = "Minimize";
-    } else {
-        mapControls.classList.add("minimized");
-        minimizeButton.textContent = "Maximize";
+function toggleMinimize(type) {
+    if(type == 1){
+        const mapControls = document.getElementById("mapControls");
+        const minimizeButton = document.getElementById("minimizeButton");
+
+        if (mapControls.classList.contains("minimized")) {
+            mapControls.classList.remove("minimized");
+            minimizeButton.textContent = "Minimize";
+        } else {
+            mapControls.classList.add("minimized");
+            minimizeButton.textContent = "Maximize";
+        }
+    }
+    else{
+        const mapControls = document.getElementById("mapControls2");
+        const minimizeButton = document.getElementById("minimizeButton2");
+
+        if (mapControls.classList.contains("minimized")) {
+            mapControls.classList.remove("minimized");
+            minimizeButton.textContent = "Minimize";
+        } else {
+            mapControls.classList.add("minimized");
+            minimizeButton.textContent = "Maximize";
+        }
     }
 }
 
-function updateTextBox() {
-    const selectElement = document.getElementById("options");
-    const textBox = document.getElementById("textbox");
+function updateTextBox(type) {
+    let selectElement;
+    let textBox;
+    if(type == 1){
+        selectElement = document.getElementById("options");
+        textBox = document.getElementById("textbox");
+    }
+    else{
+        selectElement = document.getElementById("options2");
+        textBox = document.getElementById("textbox2");
+    }
 
     // Get selected options
     const selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.text);
@@ -103,58 +139,108 @@ function updateTextBox() {
     textBox.value = currentText;
     selectElement.selectIndex = -1;
     Array.from(selectElement.selectedOptions).forEach((e) => e.selected = false)
-    find_min_max_crime_vals();
+    find_min_max_crime_vals(type);
 }
 
-function find_min_max_crime_vals(){
+function find_min_max_crime_vals(type){
     let data = current_dataset[0]
+    let data2 = current_dataset2[0]
 
     let max = -1;
     let min = -1;
-    if(dataset_label == "crime"){
+    if(type == 1){
+        if(dataset_label == "crime"){
 
-        yearMin = parseInt(slider_tags[0].innerHTML)
-        yearMax = parseInt(slider_tags[1].innerHTML)
-        const textBox = document.getElementById("textbox");
+            yearMin = parseInt(slider_tags[0].innerHTML)
+            yearMax = parseInt(slider_tags[1].innerHTML)
+            const textBox = document.getElementById("textbox");
 
-        for(const [key, neighborhood] of Object.entries(data)){
-            let thisCount = 0;
-            for (let n in neighborhood){
-                if(!(allCrimes.includes(neighborhood[n]["primary_type"]))){
-                    allCrimes.push(neighborhood[n]["primary_type"])
+            for(const [key, neighborhood] of Object.entries(data)){
+                let thisCount = 0;
+                for (let n in neighborhood){
+                    if(!(allCrimes.includes(neighborhood[n]["primary_type"]))){
+                        allCrimes.push(neighborhood[n]["primary_type"])
+                    }
+                    if(parseInt(neighborhood[n]["Year"]) >= yearMin && parseInt(neighborhood[n]["Year"]) <= yearMax && ((textBox.value.startsWith(neighborhood[n]["primary_type"]) && textBox.value.length == neighborhood[n]["primary_type"].length) || textBox.value.startsWith(neighborhood[n]["primary_type"] + ",") || textBox.value.endsWith(", " + neighborhood[n]["primary_type"]) || textBox.value.includes(", " + neighborhood[n]["primary_type"] + ",") || (textBox.value.includes("NON-CRIMINAL") && neighborhood[n]["primary_type"].includes("NON") && neighborhood[n]["primary_type"].includes("CRIMINAL")) || (textBox.value.includes("CRIMINAL SEXUAL ASSAULT") && neighborhood[n]["primary_type"].includes("SEXUAL ASSAULT")) || textBox.value.includes("ALL CRIMES"))){
+                        thisCount += parseInt(neighborhood[n]["count"])
+                    }
                 }
-                if(parseInt(neighborhood[n]["Year"]) >= yearMin && parseInt(neighborhood[n]["Year"]) <= yearMax && ((textBox.value.startsWith(neighborhood[n]["primary_type"]) && textBox.value.length == neighborhood[n]["primary_type"].length) || textBox.value.startsWith(neighborhood[n]["primary_type"] + ",") || textBox.value.endsWith(", " + neighborhood[n]["primary_type"]) || textBox.value.includes(", " + neighborhood[n]["primary_type"] + ",") || (textBox.value.includes("NON-CRIMINAL") && neighborhood[n]["primary_type"].includes("NON") && neighborhood[n]["primary_type"].includes("CRIMINAL")) || (textBox.value.includes("CRIMINAL SEXUAL ASSAULT") && neighborhood[n]["primary_type"].includes("SEXUAL ASSAULT")) || textBox.value.includes("ALL CRIMES"))){
-                    thisCount += parseInt(neighborhood[n]["count"])
+                if(thisCount > max){
+                    max = thisCount;
+                }
+                if(thisCount < min || min == -1){
+                    min = thisCount;
                 }
             }
-            if(thisCount > max){
-                max = thisCount;
-            }
-            if(thisCount < min || min == -1){
-                min = thisCount;
-            }
+
+            maxVal = max;
+            minVal = min;
+            lyr_Communities_1.changed();
         }
-
-        maxVal = max;
-        minVal = min;
-        lyr_Communities_1.changed();
+        else{
+            for(const [key, neighborhood] of Object.entries(data)){
+                if(parseInt(neighborhood[dataset_label]) > max){
+                    max = parseInt(neighborhood[dataset_label])
+                }
+                else if(parseInt(neighborhood[dataset_label]) < min || min == -1){
+                    min = parseInt(neighborhood[dataset_label])
+                }
+            }
+            maxVal = max;
+            minVal = min;
+            lyr_Communities_1.changed();
+        }
     }
     else{
-        for(const [key, neighborhood] of Object.entries(data)){
-            if(parseInt(neighborhood[dataset_label]) > max){
-                max = parseInt(neighborhood[dataset_label])
+        max = -1;
+        min = -1;
+        if(dataset_label2 == "crime"){
+
+            yearMin2 = parseInt(slider_tags[2].innerHTML)
+            yearMax2 = parseInt(slider_tags[3].innerHTML)
+            const textBox = document.getElementById("textbox2");
+
+            for(const [key, neighborhood] of Object.entries(data2)){
+                let thisCount = 0;
+                for (let n in neighborhood){
+                    if(!(allCrimes2.includes(neighborhood[n]["primary_type"]))){
+                        allCrimes2.push(neighborhood[n]["primary_type"])
+                    }
+                    if(parseInt(neighborhood[n]["Year"]) >= yearMin2 && parseInt(neighborhood[n]["Year"]) <= yearMax2 && ((textBox.value.startsWith(neighborhood[n]["primary_type"]) && textBox.value.length == neighborhood[n]["primary_type"].length) || textBox.value.startsWith(neighborhood[n]["primary_type"] + ",") || textBox.value.endsWith(", " + neighborhood[n]["primary_type"]) || textBox.value.includes(", " + neighborhood[n]["primary_type"] + ",") || (textBox.value.includes("NON-CRIMINAL") && neighborhood[n]["primary_type"].includes("NON") && neighborhood[n]["primary_type"].includes("CRIMINAL")) || (textBox.value.includes("CRIMINAL SEXUAL ASSAULT") && neighborhood[n]["primary_type"].includes("SEXUAL ASSAULT")) || textBox.value.includes("ALL CRIMES"))){
+                        thisCount += parseInt(neighborhood[n]["count"])
+                    }
+                }
+                if(thisCount > max){
+                    max = thisCount;
+                }
+                if(thisCount < min || min == -1){
+                    min = thisCount;
+                }
             }
-            else if(parseInt(neighborhood[dataset_label]) < min || min == -1){
-                min = parseInt(neighborhood[dataset_label])
-            }
+
+            maxVal2 = max;
+            minVal2 = min;
+            lyr_Communities_2.changed();
         }
-        maxVal = max;
-        minVal = min;
-        lyr_Communities_1.changed();
+        else{
+            for(const [key, neighborhood] of Object.entries(data2)){
+                if(parseInt(neighborhood[dataset_label2]) > max){
+                    max = parseInt(neighborhood[dataset_label2])
+                }
+                else if(parseInt(neighborhood[dataset_label2]) < min || min == -1){
+                    min = parseInt(neighborhood[dataset_label2])
+                }
+            }
+            maxVal2 = max;
+            minVal2 = min;
+            lyr_Communities_2.changed();
+        }
     }
 }
 
 function add_second_map(){
+    var context = document.getElementById("dataset_context_container2")
+    var map2Dataset = document.getElementById("map2Datasets")
     let theMap = document.getElementById("map")
     let theMap2 = document.getElementById("map2")
     let container = document.getElementById("mapControlsContainer")
@@ -166,6 +252,8 @@ function add_second_map(){
         theMap2.classList.add("hidden");
         container.style.right = "0%"
         container2.classList.add("hidden");
+        context.classList.add("hidden");
+        map2Dataset.classList.add("hidden");
     }
     else{
         theMap.classList.add("duo");
@@ -174,56 +262,102 @@ function add_second_map(){
         theMap2.classList.remove("hidden");
         container.style.right = "50%"
         container2.classList.remove("hidden");
+        context.classList.remove("hidden");
+        map2Dataset.classList.remove("hidden");
     }
     second_map = !second_map
     this.map.updateSize();
+    this.map2.updateSize();
+
+    map2.getView().fit([-9798650.124116, 5090505.780824, -9721601.855923, 5169624.836970], map2.getSize());
 }
 
-function change_dataset(dataset){
-    let container = document.getElementById("mapControlsContainer")
-    let container2 = document.getElementById("mapControlsContainer2")
-    dataset_label = dataset;
-    if(dataset == "crime"){
-        dataset_text.innerHTML = crime_context;
-        current_dataset = [crime_data]
-        container.classList.remove("hidden");
-        container2.classList.remove("hidden");
+function change_dataset(dataset, type){
+    if(type == 1){
+        let container = document.getElementById("mapControlsContainer")
+        dataset_label = dataset;
+        if(dataset == "crime"){
+            dataset_text.innerHTML = crime_context;
+            current_dataset = [crime_data]
+            container.classList.remove("hidden");
+        }
+        else{
+            current_dataset = [community_data]
+            container.classList.add("hidden");
+        }
+
+        if(dataset == "units"){
+            dataset_text.innerHTML = housing_context;
+        }
+        else if(dataset == "libraries"){
+            dataset_text.innerHTML = libraries_context;
+        }
+        else if(dataset == "innovations"){
+            dataset_text.innerHTML = school_context;
+        }
+        else if(dataset == "testers"){
+            dataset_text.innerHTML = covid_context;
+        }
+        else if(dataset == "seniors"){
+            dataset_text.innerHTML = senior_context;
+        }
+        else if(dataset == "schools"){
+            dataset_text.innerHTML = school_context;
+        }
+        else if(dataset == "potholes"){
+            dataset_text.innerHTML = pothole_context;
+        }
+
+        find_min_max_crime_vals(1)
+        
+        lyr_Communities_1.changed();
     }
     else{
-        current_dataset = [community_data]
-        container.classList.add("hidden");
-        container2.classList.add("hidden");
-    }
+        let container = document.getElementById("mapControlsContainer2")
+        dataset_label2 = dataset;
+        if(dataset == "crime"){
+            dataset_text2.innerHTML = crime_context;
+            current_dataset2 = [crime_data]
+            container.classList.remove("hidden");
+        }
+        else{
+            current_dataset2 = [community_data]
+            container.classList.add("hidden");
+        }
 
-    if(dataset == "units"){
-        dataset_text.innerHTML = housing_context;
-    }
-    else if(dataset == "libraries"){
-        dataset_text.innerHTML = libraries_context;
-    }
-    else if(dataset == "innovations"){
-        dataset_text.innerHTML = school_context;
-    }
-    else if(dataset == "testers"){
-        dataset_text.innerHTML = covid_context;
-    }
-    else if(dataset == "seniors"){
-        dataset_text.innerHTML = senior_context;
-    }
-    else if(dataset == "schools"){
-        dataset_text.innerHTML = school_context;
-    }
-    else if(dataset == "potholes"){
-        dataset_text.innerHTML = pothole_context;
-    }
+        if(dataset == "units"){
+            dataset_text2.innerHTML = housing_context;
+        }
+        else if(dataset == "libraries"){
+            dataset_text2.innerHTML = libraries_context;
+        }
+        else if(dataset == "innovations"){
+            dataset_text2.innerHTML = school_context;
+        }
+        else if(dataset == "testers"){
+            dataset_text2.innerHTML = covid_context;
+        }
+        else if(dataset == "seniors"){
+            dataset_text2.innerHTML = senior_context;
+        }
+        else if(dataset == "schools"){
+            dataset_text2.innerHTML = school_context;
+        }
+        else if(dataset == "potholes"){
+            dataset_text2.innerHTML = pothole_context;
+        }
 
-    find_min_max_crime_vals()
-    
-    lyr_Communities_1.changed();
+        find_min_max_crime_vals(2)
+        
+        lyr_Communities_2.changed();
+    }
 }
 
-find_min_max_crime_vals()
-slider.noUiSlider.on('end', () => find_min_max_crime_vals());
-slider2.noUiSlider.on('end', () => find_min_max_crime_vals2());
+find_min_max_crime_vals(1)
+find_min_max_crime_vals(2)
+slider.noUiSlider.on('end', () => find_min_max_crime_vals(1));
+slider2.noUiSlider.on('end', () => find_min_max_crime_vals(2));
 
 dataset_text.innerHTML = crime_context
+
+dataset_text2.innerHTML = crime_context

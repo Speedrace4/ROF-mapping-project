@@ -1,13 +1,19 @@
 let maxVal = 0
 let minVal = 0
+let maxVal2 = 0
+let minVal2 = 0
 
 let yearMin = 2001;
 let yearMax = 2024;
+let yearMin2 = 2001;
+let yearMax2 = 2024;
 
 let current_dataset = [crime_data]
+let current_dataset2 = [crime_data]
 let dataset_label = "crime"
+let dataset_label2 = "crime"
 
-let second_map = true;
+let second_map = false;
 
 const crime_context = "This crime data measures the amount of each crime over the period of time selected. Data is 2001 up to April 2024."
 const housing_context = "These are counts of the affordable rental housing developments that are supported by the City of Chicago to maintain affordability standards. Last updated May 15, 2024"

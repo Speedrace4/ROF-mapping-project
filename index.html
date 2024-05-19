@@ -11,15 +11,15 @@
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.css" rel="stylesheet">
+        <link href="resources/nouislider.css" rel="stylesheet">
         <title></title>
     </head>
     <body>
-        <div id="mapControlsContainer">
-            <button id="minimizeButton" onclick="toggleMinimize()">Minimize</button>
+        <div id="mapControlsContainer" style="right: 0%;">
+            <button id="minimizeButton" onclick="toggleMinimize(1)">Minimize</button>
             <div id="mapControls">
                 <textarea id="textbox" style="height: 100px;" readonly>ARSON, ASSAULT, BATTERY, BURGLARY, CONCEALED CARRY LICENSE VIOLATION, CRIMINAL DAMAGE, CRIMINAL SEXUAL ASSAULT, CRIMINAL TRESPASS, DECEPTIVE PRACTICE, DOMESTIC VIOLENCE, GAMBLING, HOMICIDE, HUMAN TRAFFICKING, INTERFERENCE WITH PUBLIC OFFICER, INTIMIDATION, KIDNAPPING, LIQUOR LAW VIOLATION, MOTOR VEHICLE THEFT, NARCOTICS, NON-CRIMINAL, OBSCENITY, OFFENSE INVOLVING CHILDREN, OTHER NARCOTIC VIOLATION, OTHER OFFENSE, PROSTITUTION, PUBLIC INDECENCY, PUBLIC PEACE VIOLATION, RITUALISM, ROBBERY, SEX OFFENSE, STALKING, THEFT, WEAPONS VIOLATION</textarea>
-                <select id="options" name="options" multiple onchange="updateTextBox()" style="height: 100px;">
+                <select id="options" name="options" multiple onchange="updateTextBox(1)" style="height: 100px;">
                     <option>ARSON</option>
                     <option>ASSAULT</option>
                     <option>BATTERY</option>
@@ -62,11 +62,11 @@
                 </div>  
             </div>
         </div>
-            <div id="mapControlsContainer2">
-                <button id="minimizeButton2" onclick="toggleMinimize()">Minimize</button>
+            <div id="mapControlsContainer2" class="hidden">
+                <button id="minimizeButton2" onclick="toggleMinimize(2)">Minimize</button>
                 <div id="mapControls2">
                     <textarea id="textbox2" style="height: 100px;" readonly>ARSON, ASSAULT, BATTERY, BURGLARY, CONCEALED CARRY LICENSE VIOLATION, CRIMINAL DAMAGE, CRIMINAL SEXUAL ASSAULT, CRIMINAL TRESPASS, DECEPTIVE PRACTICE, DOMESTIC VIOLENCE, GAMBLING, HOMICIDE, HUMAN TRAFFICKING, INTERFERENCE WITH PUBLIC OFFICER, INTIMIDATION, KIDNAPPING, LIQUOR LAW VIOLATION, MOTOR VEHICLE THEFT, NARCOTICS, NON-CRIMINAL, OBSCENITY, OFFENSE INVOLVING CHILDREN, OTHER NARCOTIC VIOLATION, OTHER OFFENSE, PROSTITUTION, PUBLIC INDECENCY, PUBLIC PEACE VIOLATION, RITUALISM, ROBBERY, SEX OFFENSE, STALKING, THEFT, WEAPONS VIOLATION</textarea>
-                    <select id="options2" name="options" multiple onchange="updateTextBox()" style="height: 100px;">
+                    <select id="options2" name="options" multiple onchange="updateTextBox(2)" style="height: 100px;">
                         <option>ARSON</option>
                         <option>ASSAULT</option>
                         <option>BATTERY</option>
@@ -102,20 +102,20 @@
                         <option>THEFT</option>
                         <option>WEAPONS VIOLATION</option>
                     </select>
-                    <button onclick="selectAll()">Select All</button>
-                    <button onclick="deselectAll()">Deselect All</button>
+                    <button onclick="selectAll2()">Select All</button>
+                    <button onclick="deselectAll2()">Deselect All</button>
                     <div class="navbar">
                         <div id="slider2"></div>
                     </div>
                 </div>
             </div>
-        <div id="map" class="duo">
+        <div id="map" class="solo">
             <div id="popup" class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
             </div>
         </div>
-        <div id="map2" class="shown">
+        <div id="map2" class="hidden">
             <div id="popup2" class="ol-popup">
                 <a href="#" id="popup-closer2" class="ol-popup-closer"></a>
                 <div id="popup-content2"></div>
@@ -128,48 +128,88 @@
                 <div class="line"></div>
             </div>
             <div class="checkbox-container">
-                <input type="checkbox" id="includeSecondMap" onchange="add_second_map()" checked>
+                <input type="checkbox" id="includeSecondMap" onchange="add_second_map()">
                 <label for="includeSecondMap">Include second map</label>
             </div>
             <div>
                 <h3 style="text-align: center;">Datasets</h3>
                 <form>
                     <label>
-                        <input type="radio" name="option" value="option1" checked onchange="change_dataset('crime')"> Crime Data
+                        <input type="radio" name="option" value="option1" checked onchange="change_dataset('crime', 1)"> Crime Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option2" onchange="change_dataset('units')"> Affordable Housing Data
+                        <input type="radio" name="option" value="option2" onchange="change_dataset('units', 1)"> Affordable Housing Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option3" onchange="change_dataset('libraries')"> Library Data
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('libraries', 1)"> Library Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option3" onchange="change_dataset('innovations')"> Broadband Innovation Data
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('innovations', 1)"> Broadband Innovation Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option3" onchange="change_dataset('testers')"> COVID Testing Site Data
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('testers', 1)"> COVID Testing Site Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option3" onchange="change_dataset('seniors')"> Senior Center Data
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('seniors', 1)"> Senior Center Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option3" onchange="change_dataset('schools')"> School Data
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('schools', 1)"> School Data
                     </label>
                     <br>
                     <label>
-                        <input type="radio" name="option" value="option3" onchange="change_dataset('potholes')"> Pothole Data
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('potholes', 1)"> Pothole Data
                     </label>
                 </form>
             </div>
             <div>
                 <h3 style="text-align: center;">Dataset Context</h3>
                 <p id="dataset_context" style="text-align: center;">Crime context</p>
+            </div>
+            <div id="map2Datasets" class="hidden">
+                <h3 style="text-align: center;">Second Map Datasets</h3>
+                <form>
+                    <label>
+                        <input type="radio" name="option" value="option1" checked onchange="change_dataset('crime', 2)"> Crime Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option2" onchange="change_dataset('units', 2)"> Affordable Housing Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('libraries', 2)"> Library Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('innovations', 2)"> Broadband Innovation Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('testers', 2)"> COVID Testing Site Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('seniors', 2)"> Senior Center Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('schools', 2)"> School Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('potholes', 2)"> Pothole Data
+                    </label>
+                </form>
+            </div>
+            <div id="dataset_context_container2" class="hidden">
+                <h3 style="text-align: center;">Dataset 2 Context</h3>
+                <p id="dataset_context2" style="text-align: center;">Crime context</p>
             </div>
         </div>
         <script>
