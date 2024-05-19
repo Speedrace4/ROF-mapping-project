@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.css" rel="stylesheet">
+        <title></title>
+    </head>
+    <body>
+        <div id="mapControlsContainer">
+            <button id="minimizeButton" onclick="toggleMinimize()">Minimize</button>
+            <div id="mapControls">
+                <textarea id="textbox" style="height: 100px;" readonly>ARSON, ASSAULT, BATTERY, BURGLARY, CONCEALED CARRY LICENSE VIOLATION, CRIMINAL DAMAGE, CRIMINAL SEXUAL ASSAULT, CRIMINAL TRESPASS, DECEPTIVE PRACTICE, DOMESTIC VIOLENCE, GAMBLING, HOMICIDE, HUMAN TRAFFICKING, INTERFERENCE WITH PUBLIC OFFICER, INTIMIDATION, KIDNAPPING, LIQUOR LAW VIOLATION, MOTOR VEHICLE THEFT, NARCOTICS, NON-CRIMINAL, OBSCENITY, OFFENSE INVOLVING CHILDREN, OTHER NARCOTIC VIOLATION, OTHER OFFENSE, PROSTITUTION, PUBLIC INDECENCY, PUBLIC PEACE VIOLATION, RITUALISM, ROBBERY, SEX OFFENSE, STALKING, THEFT, WEAPONS VIOLATION</textarea>
+                <select id="options" name="options" multiple onchange="updateTextBox()" style="height: 100px;">
+                    <option>ARSON</option>
+                    <option>ASSAULT</option>
+                    <option>BATTERY</option>
+                    <option>BURGLARY</option>
+                    <option>CONCEALED CARRY LICENSE VIOLATION</option>
+                    <option>CRIM SEXUAL ASSAULT</option>
+                    <option>CRIMINAL DAMAGE</option>
+                    <option>CRIMINAL SEXUAL ASSAULT</option>
+                    <option>CRIMINAL TRESPASS</option>
+                    <option>DECEPTIVE PRACTICE</option>
+                    <option>DOMESTIC VIOLENCE</option>
+                    <option>GAMBLING</option>
+                    <option>HOMICIDE</option>
+                    <option>HUMAN TRAFFICKING</option>
+                    <option>INTERFERENCE WITH PUBLIC OFFICER</option>
+                    <option>INTIMIDATION</option>
+                    <option>KIDNAPPING</option>
+                    <option>LIQUOR LAW VIOLATION</option>
+                    <option>MOTOR VEHICLE THEFT</option>
+                    <option>NARCOTICS</option>
+                    <option>NON-CRIMINAL</option>
+                    <option>OBSCENITY</option>
+                    <option>OFFENSE INVOLVING CHILDREN</option>
+                    <option>OTHER NARCOTIC VIOLATION</option>
+                    <option>OTHER OFFENSE</option>
+                    <option>PUBLIC INDECENCY</option>
+                    <option>PUBLIC PEACE VIOLATION</option>
+                    <option>PROSTITUTION</option>
+                    <option>ROBBERY</option>
+                    <option>RITUALISM</option>
+                    <option>SEX OFFENSE</option>
+                    <option>STALKING</option>
+                    <option>THEFT</option>
+                    <option>WEAPONS VIOLATION</option>
+                </select>
+                <button onclick="selectAll()">Select All</button>
+                <button onclick="deselectAll()">Deselect All</button>
+                <div class="navbar">
+                    <div id="slider"></div>
+                </div>  
+            </div>
+        </div>
+            <div id="mapControlsContainer2">
+                <button id="minimizeButton2" onclick="toggleMinimize()">Minimize</button>
+                <div id="mapControls2">
+                    <textarea id="textbox2" style="height: 100px;" readonly>ARSON, ASSAULT, BATTERY, BURGLARY, CONCEALED CARRY LICENSE VIOLATION, CRIMINAL DAMAGE, CRIMINAL SEXUAL ASSAULT, CRIMINAL TRESPASS, DECEPTIVE PRACTICE, DOMESTIC VIOLENCE, GAMBLING, HOMICIDE, HUMAN TRAFFICKING, INTERFERENCE WITH PUBLIC OFFICER, INTIMIDATION, KIDNAPPING, LIQUOR LAW VIOLATION, MOTOR VEHICLE THEFT, NARCOTICS, NON-CRIMINAL, OBSCENITY, OFFENSE INVOLVING CHILDREN, OTHER NARCOTIC VIOLATION, OTHER OFFENSE, PROSTITUTION, PUBLIC INDECENCY, PUBLIC PEACE VIOLATION, RITUALISM, ROBBERY, SEX OFFENSE, STALKING, THEFT, WEAPONS VIOLATION</textarea>
+                    <select id="options2" name="options" multiple onchange="updateTextBox()" style="height: 100px;">
+                        <option>ARSON</option>
+                        <option>ASSAULT</option>
+                        <option>BATTERY</option>
+                        <option>BURGLARY</option>
+                        <option>CONCEALED CARRY LICENSE VIOLATION</option>
+                        <option>CRIM SEXUAL ASSAULT</option>
+                        <option>CRIMINAL DAMAGE</option>
+                        <option>CRIMINAL SEXUAL ASSAULT</option>
+                        <option>CRIMINAL TRESPASS</option>
+                        <option>DECEPTIVE PRACTICE</option>
+                        <option>DOMESTIC VIOLENCE</option>
+                        <option>GAMBLING</option>
+                        <option>HOMICIDE</option>
+                        <option>HUMAN TRAFFICKING</option>
+                        <option>INTERFERENCE WITH PUBLIC OFFICER</option>
+                        <option>INTIMIDATION</option>
+                        <option>KIDNAPPING</option>
+                        <option>LIQUOR LAW VIOLATION</option>
+                        <option>MOTOR VEHICLE THEFT</option>
+                        <option>NARCOTICS</option>
+                        <option>NON-CRIMINAL</option>
+                        <option>OBSCENITY</option>
+                        <option>OFFENSE INVOLVING CHILDREN</option>
+                        <option>OTHER NARCOTIC VIOLATION</option>
+                        <option>OTHER OFFENSE</option>
+                        <option>PUBLIC INDECENCY</option>
+                        <option>PUBLIC PEACE VIOLATION</option>
+                        <option>PROSTITUTION</option>
+                        <option>ROBBERY</option>
+                        <option>RITUALISM</option>
+                        <option>SEX OFFENSE</option>
+                        <option>STALKING</option>
+                        <option>THEFT</option>
+                        <option>WEAPONS VIOLATION</option>
+                    </select>
+                    <button onclick="selectAll()">Select All</button>
+                    <button onclick="deselectAll()">Deselect All</button>
+                    <div class="navbar">
+                        <div id="slider2"></div>
+                    </div>
+                </div>
+            </div>
+        <div id="map" class="duo">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
+        <div id="map2" class="shown">
+            <div id="popup2" class="ol-popup">
+                <a href="#" id="popup-closer2" class="ol-popup-closer"></a>
+                <div id="popup-content2"></div>
+            </div>
+        </div>
+        <div class="side-panel" id="sidePanel">
+            <div class="tab" id="tab">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="includeSecondMap" onchange="add_second_map()" checked>
+                <label for="includeSecondMap">Include second map</label>
+            </div>
+            <div>
+                <h3 style="text-align: center;">Datasets</h3>
+                <form>
+                    <label>
+                        <input type="radio" name="option" value="option1" checked onchange="change_dataset('crime')"> Crime Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option2" onchange="change_dataset('units')"> Affordable Housing Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('libraries')"> Library Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('innovations')"> Broadband Innovation Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('testers')"> COVID Testing Site Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('seniors')"> Senior Center Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('schools')"> School Data
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('potholes')"> Pothole Data
+                    </label>
+                </form>
+            </div>
+            <div>
+                <h3 style="text-align: center;">Dataset Context</h3>
+                <p id="dataset_context" style="text-align: center;">Crime context</p>
+            </div>
+        </div>
+        <script>
+            document.getElementById('tab').addEventListener('click', function() {
+                var sidePanel = document.getElementById('sidePanel');
+                if (sidePanel.classList.contains('open')) {
+                    sidePanel.classList.remove('open');
+                } else {
+                    sidePanel.classList.add('open');
+                }
+            });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+        <script src="crime_data.js"></script>
+        <script src="community_data.js"></script>
+        <script src="init_vars.js"></script>
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="resources/polyfills.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="layers/Communities_1.js"></script>
+        <!-- <script src="layers/Police_2.js"></script> -->
+        <script src="styles/Communities_1_style.js"></script>
+        <!-- <script src="styles/Police_2_style.js"></script> -->
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+        <script src="map_mods.js"></script>
+    </body>
+</html>
