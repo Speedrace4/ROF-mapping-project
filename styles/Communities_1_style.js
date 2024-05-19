@@ -3,6 +3,10 @@ var placement = 'point';
 
 var the_color = 0;
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function mapValueToRGB(value, minRGB, maxRGB, type) {
     // Ensure the value is within the specified range
     let data;
@@ -19,7 +23,6 @@ function mapValueToRGB(value, minRGB, maxRGB, type) {
     else if(type == 2 && dataset_label2 == "crime"){
         textBox = document.getElementById("textbox2");
     }
-
     let neighborhood = data[value];
     let overallCount = 0;
 
@@ -42,7 +45,6 @@ function mapValueToRGB(value, minRGB, maxRGB, type) {
                     overallCount += parseInt(neighborhood[n]["count"])
                 }
         }
-        console.log("First", overallCount, maxVal, minVal, yearMax, yearMin)
     }
     else if(type == 1){
         overallCount = neighborhood[dataset_label];
@@ -53,11 +55,9 @@ function mapValueToRGB(value, minRGB, maxRGB, type) {
                     overallCount += parseInt(neighborhood[n]["count"])
                 }
         }
-        console.log(overallCount, maxVal2, minVal2, yearMax2, yearMin2)
     }
     else if(type == 2){
         overallCount = neighborhood[dataset_label2];
-        console.log(overallCount, maxVal2, minVal2, yearMax2, yearMin2)
     }
 
     value = overallCount
@@ -137,7 +137,7 @@ var style_Communities_1 = function(feature, resolution){
     var color = the_color;
     var placement = 'point';
     if ("" !== null) {
-        labelText = String("");
+        labelText = String("hello");
     }
     var style = categories_Communities_1(feature, value, size, resolution, labelText,
         labelFont, labelFill, bufferColor,

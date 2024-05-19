@@ -179,11 +179,11 @@ function find_min_max_crime_vals(type){
         }
         else{
             for(const [key, neighborhood] of Object.entries(data)){
-                if(parseInt(neighborhood[dataset_label]) > max){
-                    max = parseInt(neighborhood[dataset_label])
+                if(parseFloat(neighborhood[dataset_label]) > max){
+                    max = parseFloat(neighborhood[dataset_label])
                 }
-                else if(parseInt(neighborhood[dataset_label]) < min || min == -1){
-                    min = parseInt(neighborhood[dataset_label])
+                else if(parseFloat(neighborhood[dataset_label]) < min || min == -1){
+                    min = parseFloat(neighborhood[dataset_label])
                 }
             }
             maxVal = max;
@@ -224,11 +224,11 @@ function find_min_max_crime_vals(type){
         }
         else{
             for(const [key, neighborhood] of Object.entries(data2)){
-                if(parseInt(neighborhood[dataset_label2]) > max){
-                    max = parseInt(neighborhood[dataset_label2])
+                if(parseFloat(neighborhood[dataset_label2]) > max){
+                    max = parseFloat(neighborhood[dataset_label2])
                 }
-                else if(parseInt(neighborhood[dataset_label2]) < min || min == -1){
-                    min = parseInt(neighborhood[dataset_label2])
+                else if(parseFloat(neighborhood[dataset_label2]) < min || min == -1){
+                    min = parseFloat(neighborhood[dataset_label2])
                 }
             }
             maxVal2 = max;
@@ -250,20 +250,24 @@ function add_second_map(){
         theMap.classList.add("solo");
         theMap2.classList.remove("shown");
         theMap2.classList.add("hidden");
-        container.style.right = "0%"
-        container2.classList.add("hidden");
-        context.classList.add("hidden");
         map2Dataset.classList.add("hidden");
+        container.style.right = "0%"
+        context.classList.add("hidden");
+        if(dataset_label2 == "crime"){
+            container2.classList.add("hidden");
+        }
     }
     else{
         theMap.classList.add("duo");
         theMap.classList.remove("solo");
         theMap2.classList.add("shown");
         theMap2.classList.remove("hidden");
-        container.style.right = "50%"
-        container2.classList.remove("hidden");
-        context.classList.remove("hidden");
         map2Dataset.classList.remove("hidden");
+        container.style.right = "50%"
+        context.classList.remove("hidden");
+        if(dataset_label2 == "crime"){
+            container2.classList.remove("hidden");
+        }
     }
     second_map = !second_map
     this.map.updateSize();
@@ -280,6 +284,10 @@ function change_dataset(dataset, type){
             dataset_text.innerHTML = crime_context;
             current_dataset = [crime_data]
             container.classList.remove("hidden");
+        }
+        else if(["trees", "poverty", "licenses", "diversity", "hardship", "income", "capita_income", "cleanliness", "particulates", "traffic"].includes(dataset.toLowerCase())){
+            current_dataset = [other_data]
+            container.classList.add("hidden");
         }
         else{
             current_dataset = [community_data]
@@ -307,6 +315,36 @@ function change_dataset(dataset, type){
         else if(dataset == "potholes"){
             dataset_text.innerHTML = pothole_context;
         }
+        else if(dataset == "poverty"){
+            dataset_text.innerHTML = poverty_context;
+        }
+        else if(dataset == "diversity"){
+            dataset_text.innerHTML = diversity_context;
+        }
+        else if(dataset == "licenses"){
+            dataset_text.innerHTML = licenses_context;
+        }
+        else if(dataset == "hardship"){
+            dataset_text.innerHTML = hardship_context;
+        }
+        else if(dataset == "trees"){
+            dataset_text.innerHTML = trees_context;
+        }
+        else if(dataset == "income"){
+            dataset_text.innerHTML = income_context;
+        }
+        else if(dataset == "capita_income"){
+            dataset_text.innerHTML = capita_income_context;
+        }
+        else if(dataset == "cleanliness"){
+            dataset_text.innerHTML = cleanliness_context;
+        }
+        else if(dataset == "particulates"){
+            dataset_text.innerHTML = particulates_context;
+        }
+        else if(dataset == "traffic"){
+            dataset_text.innerHTML = traffic_context;
+        }
 
         find_min_max_crime_vals(1)
         
@@ -319,6 +357,10 @@ function change_dataset(dataset, type){
             dataset_text2.innerHTML = crime_context;
             current_dataset2 = [crime_data]
             container.classList.remove("hidden");
+        }
+        else if(["trees", "poverty", "licenses", "diversity", "hardship", "income", "capita_income", "cleanliness", "particulates", "traffic"].includes(dataset.toLowerCase())){
+            current_dataset2 = [other_data]
+            container.classList.add("hidden");
         }
         else{
             current_dataset2 = [community_data]
@@ -345,6 +387,36 @@ function change_dataset(dataset, type){
         }
         else if(dataset == "potholes"){
             dataset_text2.innerHTML = pothole_context;
+        }
+        else if(dataset == "poverty"){
+            dataset_text2.innerHTML = poverty_context;
+        }
+        else if(dataset == "diversity"){
+            dataset_text2.innerHTML = diversity_context;
+        }
+        else if(dataset == "licenses"){
+            dataset_text2.innerHTML = licenses_context;
+        }
+        else if(dataset == "hardship"){
+            dataset_text2.innerHTML = hardship_context;
+        }
+        else if(dataset == "trees"){
+            dataset_text2.innerHTML = trees_context;
+        }
+        else if(dataset == "income"){
+            dataset_text2.innerHTML = income_context;
+        }
+        else if(dataset == "capita_income"){
+            dataset_text2.innerHTML = capita_income_context;
+        }
+        else if(dataset == "cleanliness"){
+            dataset_text2.innerHTML = cleanliness_context;
+        }
+        else if(dataset == "particulates"){
+            dataset_text2.innerHTML = particulates_context;
+        }
+        else if(dataset == "traffic"){
+            dataset_text2.innerHTML = traffic_context;
         }
 
         find_min_max_crime_vals(2)

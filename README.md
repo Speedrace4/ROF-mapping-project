@@ -1,8 +1,16 @@
 # ROF-mapping-project
 
+### Purpose:
+
+This project was done for the Reimagining our Future UChicago class. Its purpose is to give allow easy map comparisons
+
 ### Sources:
 
-All data is sourced from https://data.cityofchicago.org/. Specific datasets:
+Citations: 
+- “City of Chicago | Data Portal | City of Chicago | Data Portal.” n.d. Chicago. https://data.cityofchicago.org/.
+- “Chicago Health Atlas.” n.d. Chicagohealthatlas.org. https://chicagohealthatlas.org/.
+
+All data is sourced from https://data.cityofchicago.org/ or https://chicagohealthatlas.org/. Specific datasets:
 
 - Community Boundaries: https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Neighborhoods/bbvz-uum9
 - Crime: https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data
@@ -15,3 +23,7 @@ All data is sourced from https://data.cityofchicago.org/. Specific datasets:
 - Affordable Housing: https://data.cityofchicago.org/Community-Economic-Development/Affordable-Rental-Housing-Developments-Map/k3g7-7kgc
 - Potholes: https://data.cityofchicago.org/Transportation/Potholes-Patched/wqdh-9gek/data_preview
 - Schools: https://data.cityofchicago.org/Education/Chicago-Public-Schools-School-Progress-Reports-SY2/2dn2-x66j/
+- Poverty Rates: 
+- Economic Diversity: 
+- Hardship Index: 
+- 

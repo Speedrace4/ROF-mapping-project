@@ -121,7 +121,7 @@
                 <div id="popup-content2"></div>
             </div>
         </div>
-        <div class="side-panel" id="sidePanel">
+        <div class="side-panel" id="sidePanel" style="padding: 5px;">
             <div class="tab" id="tab">
                 <div class="line"></div>
                 <div class="line"></div>
@@ -165,6 +165,46 @@
                     <label>
                         <input type="radio" name="option" value="option3" onchange="change_dataset('potholes', 1)"> Pothole Data
                     </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option1" onchange="change_dataset('poverty', 1)"> Poverty Rate
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option2" onchange="change_dataset('licenses', 1)"> Active Business License Rate
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('diversity', 1)"> Economic Diversity Index
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('hardship', 1)"> Hardship Index
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('income', 1)"> Median Household Income
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('capita_income', 1)"> Per Capita Income
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('trees', 1)"> Tree Canopy %
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('cleanliness', 1)"> Neighborhood Cleanliness Rate
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('particulates', 1)"> Particulate Matter
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('traffic', 1)"> Traffic Intensity
+                    </label>
                 </form>
             </div>
             <div>
@@ -205,6 +245,46 @@
                     <label>
                         <input type="radio" name="option" value="option3" onchange="change_dataset('potholes', 2)"> Pothole Data
                     </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option1" onchange="change_dataset('poverty', 2)"> Poverty Rate
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option2" onchange="change_dataset('licenses', 2)"> Active Business License Rate
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('diversity', 2)"> Economic Diversity Index
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('hardship', 2)"> Hardship Index
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('income', 2)"> Median Household Income
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('capita_income', 2)"> Per Capita Income
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('trees', 2)"> Tree Canopy %
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('cleanliness', 2)"> Neighborhood Cleanliness Rate
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('particulates', 2)"> Particulate Matter
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="option" value="option3" onchange="change_dataset('traffic', 2)"> Traffic Intensity
+                    </label>
                 </form>
             </div>
             <div id="dataset_context_container2" class="hidden">
@@ -225,6 +305,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
         <script src="crime_data.js"></script>
         <script src="community_data.js"></script>
+        <script src="other_data.js"></script>
         <script src="init_vars.js"></script>
         <script src="resources/qgis2web_expressions.js"></script>
         <script src="resources/polyfills.js"></script>
